@@ -1,0 +1,103 @@
+body {
+  background-color: #4d4d4d;
+  font-family: "Isocpeur";
+}
+
+li {
+  list-style-type: none;
+}
+
+.wrapper {
+  width: 730px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 22px;
+}
+
+.title {
+  font-size: 28px;
+}
+
+.textarea {
+  background-color: gray;
+  font-size: 20px;
+}
+
+.textarea:focus-visible {
+  outline: none;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  width: 720px;
+  background-color: #272727;
+  padding: 10px 0 0 10px;
+}
+
+.key {
+  min-width: 40px;
+  height: 40px;
+  background-color: black;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  transition: 0.2s;
+  box-shadow: 2px 2px rgb(61, 8, 8);
+}
+
+.key:hover {
+  cursor: pointer;
+  background-color: #4d4d4d;
+}
+.key:hover .symbol {
+  color: white;
+}
+
+.active {
+  background-color: #4d4d4d;
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+.active .symbol {
+  color: white;
+}
+
+.Backspace {
+  min-width: 87px;
+}
+
+.CapsLock {
+  min-width: 80px;
+}
+
+.Enter {
+  min-width: 96px;
+}
+
+.ShiftLeft {
+  min-width: 88px;
+}
+
+.ShiftRight {
+  min-width: 88px;
+}
+
+.Space {
+  min-width: 328px;
+}
+
+.symbol {
+  color: red;
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+.hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -2,6 +2,7 @@ import values from "./values.json" assert { type: "json" };
 
 const page = document.querySelector('body');
 const keyValues = values;
+let isCapsEntered = false;
 let language = "eng";
 
 function render() {
@@ -94,18 +95,59 @@ function render() {
     } else if (key.classList.contains('Tab')) {
       textarea.value = textarea.value.slice(0, start) + '    ' + textarea.value.slice(end);
       textarea.setSelectionRange(start + 4, start + 4);
+    } else if (key.classList.contains('CapsLock')) {                                      
+      isCapsEntered ? key.classList.remove("active") : key.classList.add("active");
+      changeSymbols()
+    } else if (key.classList.contains('ShiftLeft') || key.classList.contains('ShiftRight')) {      
+      changeSymbols();
+      key.addEventListener('mouseup', () => {
+        changeSymbols()
+      }, {once: true})
     }
+  }
+
+  function changeSymbols() {
+    let littleSymbols = document.querySelectorAll(`.${language}`);
+    let bigSymbols = document.querySelectorAll(`.${language}Caps`);
+    if (isCapsEntered) {
+      isCapsEntered = false;
+    } else {
+      isCapsEntered = true;
+    }
+    toggleSymbols(littleSymbols);
+    toggleSymbols(bigSymbols);
+  }
+  
+  function toggleSymbols(symbols) {
+    symbols.forEach(symbol => {
+      if (symbol.classList.contains('hidden')) {
+        symbol.classList.remove('hidden')
+      } else {
+        symbol.classList.add('hidden')
+      }
+      })
   }
 
   document.addEventListener('keydown', (event) => {
     event.preventDefault()
     let key = document.querySelector(`.${event.code}`);
-    key.classList.add('active');
-    enterSingleSymbol(key);
+    if (event.code != "CapsLock") key.classList.add('active');
+    if (event.code.includes('Shift')) {
+      if (event.repeat == false) {
+        changeSymbols();
+      }
+    } else {
+        enterSingleSymbol(key);
+    }
    }
   );
   
   document.addEventListener('keyup', (event) => {
+    if (event.code.includes('Shift')) {
+      changeSymbols();
+  }
+  if (event.code != "CapsLock") {
     let keyUp = document.querySelector(`.${event.code}`);
     keyUp.classList.remove('active');
+  }
   })

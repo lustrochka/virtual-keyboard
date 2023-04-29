@@ -96,3 +96,16 @@ function render() {
       textarea.setSelectionRange(start + 4, start + 4);
     }
   }
+
+  document.addEventListener('keydown', (event) => {
+    event.preventDefault()
+    let key = document.querySelector(`.${event.code}`);
+    key.classList.add('active');
+    enterSingleSymbol(key);
+   }
+  );
+  
+  document.addEventListener('keyup', (event) => {
+    let keyUp = document.querySelector(`.${event.code}`);
+    keyUp.classList.remove('active');
+  })

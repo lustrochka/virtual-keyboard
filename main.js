@@ -5,6 +5,20 @@ const keyValues = values;
 let isCapsEntered = false;
 let language = "eng";
 
+function getLanguage() {
+  if (localStorage.getItem("lan")) {
+    language = localStorage.getItem("lan");
+  } else {
+    localStorage.setItem("lan", language)
+  }
+}
+
+getLanguage()
+
+window.addEventListener('beforeunload', () => {
+  localStorage.setItem("lan", language)
+})
+
 function render() {
     let index = language == "eng" ? 3 : 1;
   
@@ -128,10 +142,19 @@ function render() {
       })
   }
 
+  let pressedKeys = new Set();
+
   document.addEventListener('keydown', (event) => {
     event.preventDefault()
     let key = document.querySelector(`.${event.code}`);
     if (event.code != "CapsLock") key.classList.add('active');
+    pressedKeys.add(event.code);
+    if (pressedKeys.size == 2) {
+      let array = [...pressedKeys];
+      if (array[0].includes("Control") && array[1].includes("Alt") || array[0].includes("Alt") && array[1].includes("Control")) {
+        changeLanguage()
+      };
+    }
     if (event.code.includes('Shift')) {
       if (event.repeat == false) {
         changeSymbols();
@@ -151,3 +174,14 @@ function render() {
     keyUp.classList.remove('active');
   }
   })
+
+  function changeLanguage() {
+    let anotherLang = language;
+    language = language == "bel" ? "eng" : "bel";
+    let lanTags = isCapsEntered ? `${language}Caps` : `${language}`;
+    let anotherLanTags = isCapsEntered ? `${anotherLang}Caps` : `${anotherLang}`;
+    let symbols = document.querySelectorAll(`.${lanTags}`);
+    let symbols2 = document.querySelectorAll(`.${anotherLanTags}`);
+    toggleSymbols(symbols);
+    toggleSymbols(symbols2);
+  }

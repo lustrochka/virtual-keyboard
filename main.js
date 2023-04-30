@@ -145,6 +145,7 @@ function render() {
   let pressedKeys = new Set();
 
   document.addEventListener('keydown', (event) => {
+    console.log(pressedKeys)
     event.preventDefault()
     let key = document.querySelector(`.${event.code}`);
     if (event.code != "CapsLock") key.classList.add('active');
@@ -169,10 +170,11 @@ function render() {
     if (event.code.includes('Shift')) {
       changeSymbols();
   }
-  if (event.code != "CapsLock") {
-    let keyUp = document.querySelector(`.${event.code}`);
-    keyUp.classList.remove('active');
-  }
+    if (event.code != "CapsLock") {
+      let keyUp = document.querySelector(`.${event.code}`);
+      keyUp.classList.remove('active');
+    }
+    pressedKeys.delete(event.code);
   })
 
   function changeLanguage() {
